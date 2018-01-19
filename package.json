@@ -1,7 +1,7 @@
 {
   "name": "meta-prototype",
-  "version": "1.0.0",
-  "description": "Describe meta-prototype here",
+  "version": "0.0.1",
+  "description": "Adds meta programming functionality to the prototype chain",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -16,13 +16,25 @@
     "test:coverage": "nwb test --coverage",
     "test:watch": "nwb test --server"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "nwb": "0.21.x"
   },
-  "author": "",
-  "homepage": "",
+  "author": "Daniel Lichtenstein",
+  "homepage": "https://github.com/danielwerthen/meta-prototype#readme",
   "license": "MIT",
-  "repository": ""
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielwerthen/meta-prototype.git"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [
+    "meta programming",
+    "ruby like"
+  ],
+  "bugs": {
+    "url": "https://github.com/danielwerthen/meta-prototype/issues"
+  }
 }
