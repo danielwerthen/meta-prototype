@@ -1,6 +1,6 @@
 {
   "name": "meta-prototype",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Adds meta programming functionality to the prototype chain",
   "main": "src/index.js",
   "files": [
@@ -30,5 +30,7 @@
   "bugs": {
     "url": "https://github.com/danielwerthen/meta-prototype/issues"
   },
-  "engines" : { "node" : ">=6.4" }
+  "engines": {
+    "node": ">=6.4"
+  }
 }
