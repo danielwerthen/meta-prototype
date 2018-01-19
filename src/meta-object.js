@@ -8,7 +8,17 @@ MetaObject.prototype = new Proxy(MetaObject.prototype, {
       return target[property]
     }
     if (Reflect.has(receiver, 'methodMissing')) {
-      return receiver.methodMissing(property)
+      const method = receiver.methodMissing(property)
+      if (method !== void 0) {
+        Reflect.defineProperty(
+          Reflect.getPrototypeOf(receiver),
+          property,
+          {
+            value: method
+          }
+        )
+      }
+      return method
     }
   }
 });
