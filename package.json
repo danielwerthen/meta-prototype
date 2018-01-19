@@ -2,19 +2,12 @@
   "name": "meta-prototype",
   "version": "0.0.1",
   "description": "Adds meta programming functionality to the prototype chain",
-  "main": "lib/index.js",
-  "module": "es/index.js",
+  "main": "src/index.js",
   "files": [
-    "es",
-    "lib",
-    "umd"
+    "src"
   ],
   "scripts": {
-    "build": "nwb build-web-module",
-    "clean": "nwb clean-module",
-    "test": "nwb test",
-    "test:coverage": "nwb test --coverage",
-    "test:watch": "nwb test --server"
+    "test": "jest"
   },
   "dependencies": {},
   "devDependencies": {

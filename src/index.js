@@ -1,1 +1,1 @@
-export default 'Welcome to meta-prototype'
+exports.MetaObject = require('./meta-object')
