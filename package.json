@@ -11,6 +11,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "jest-cli": "^22.4.2",
     "nwb": "0.21.x"
   },
   "author": "Daniel Lichtenstein",
