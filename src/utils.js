@@ -1,13 +1,17 @@
 function wrapMethodMissing(Class, fn) {
   const prototype = Class.prototype;
   const inner = prototype.methodMissing;
-  prototype.methodMissing = function methodMissing(name) {
-    const result = fn(name);
-    if (result === undefined) {
-      return inner(name);
-    }
-    return result;
-  };
+  Reflect.defineProperty(prototype, 'methodMissing', {
+    value: function methodMissing(name) {
+      const result = fn(name);
+      if (result === undefined) {
+        return inner(name);
+      }
+      return result;
+    },
+    writable: true,
+    enumerable: true,
+  });
 }
 
 function capitalize(str) {
