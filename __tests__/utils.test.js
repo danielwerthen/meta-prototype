@@ -1,7 +1,7 @@
 const utils = require('../src/utils');
 const MetaObject = require('../src/meta-object');
 
-describe('addPrefixedMethod', () => {
+describe('addPrefixMethods', () => {
   it('should work', () => {
     class TestClass extends MetaObject {
       methodMissing(name) {
@@ -9,11 +9,12 @@ describe('addPrefixedMethod', () => {
       }
     }
 
-    utils.addPrefixedMethod(TestClass, ['small', 'large'], function(
+    utils.addPrefixMethods(TestClass, ['small', 'large'], function(
+      innerMethod,
       prefix,
       value
     ) {
-      return prefix + (value || '');
+      return this[innerMethod](prefix + (value || ''));
     });
     const test = new TestClass();
     expect(test.foobar()).toEqual('foobar');
@@ -22,7 +23,7 @@ describe('addPrefixedMethod', () => {
   });
 });
 
-describe('addSuffixedMethod', () => {
+describe('addSuffixMethods', () => {
   it('should work', () => {
     class TestClass extends MetaObject {
       methodMissing(name) {
@@ -30,11 +31,12 @@ describe('addSuffixedMethod', () => {
       }
     }
 
-    utils.addSuffixedMethod(TestClass, ['color', 'width'], function(
+    utils.addSuffixMethods(TestClass, ['color', 'width'], function(
+      innerMethod,
       suffix,
       value
     ) {
-      return suffix + (value || '');
+      return this[innerMethod](suffix + (value || ''));
     });
     const test = new TestClass();
     expect(test.foobar()).toEqual('foobar');
@@ -51,17 +53,19 @@ describe('add both suffix and prefix', () => {
       }
     }
 
-    utils.addSuffixedMethod(TestClass, ['color', 'width'], function(
+    utils.addSuffixMethods(TestClass, ['color', 'width'], function(
+      innerMethod,
       suffix,
       value
     ) {
-      return suffix + (value || '');
+      return this[innerMethod](suffix + (value || ''));
     });
-    utils.addPrefixedMethod(TestClass, ['small', 'large'], function(
+    utils.addPrefixMethods(TestClass, ['small', 'large'], function(
+      innerMethod,
       prefix,
       value
     ) {
-      return prefix + (value || '');
+      return this[innerMethod](prefix + (value || ''));
     });
     const test = new TestClass();
     expect(test.foobar()).toEqual('foobar');

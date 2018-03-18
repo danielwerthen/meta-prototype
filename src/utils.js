@@ -22,7 +22,7 @@ function decapitalize(str) {
   return str.substr(0, 1).toLowerCase() + str.substr(1);
 }
 
-function addPrefixedMethod(Class, prefixes, handler) {
+function addPrefixMethods(Class, prefixes, handler) {
   wrapMethodMissing(Class, function prefixedMethodMissing(methodName) {
     if (typeof methodName === 'symbol') {
       return undefined;
@@ -35,12 +35,12 @@ function addPrefixedMethod(Class, prefixes, handler) {
     }
     const innerMethodName = decapitalize(methodName.substr(match.length));
     return function prefixedMethod(value) {
-      return this[innerMethodName](handler.call(this, match, value));
+      return handler.call(this, innerMethodName, match, value);
     };
   });
 }
 
-function addSuffixedMethod(Class, suffixes, handler) {
+function addSuffixMethods(Class, suffixes, handler) {
   const cleanedSuffixes = suffixes.map(function(item) {
     return [capitalize(item), item];
   });
@@ -58,14 +58,14 @@ function addSuffixedMethod(Class, suffixes, handler) {
       0,
       methodName.length - match[1].length
     );
-    return function prefixedMethod(value) {
-      return this[innerMethodName](handler.call(this, match[1], value));
+    return function suffixedMethod(value) {
+      return handler.call(this, innerMethodName, match[1], value);
     };
   });
 }
 
 module.exports = {
   wrapMethodMissing: wrapMethodMissing,
-  addPrefixedMethod: addPrefixedMethod,
-  addSuffixedMethod: addSuffixedMethod,
+  addPrefixMethods: addPrefixMethods,
+  addSuffixMethods: addSuffixMethods,
 };
