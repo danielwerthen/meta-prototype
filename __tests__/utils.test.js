@@ -74,3 +74,22 @@ describe('add both suffix and prefix', () => {
     expect(test.smallFoobarColor()).toEqual('foobarcolorsmall');
   });
 });
+
+describe('add non-function properties', () => {
+  it('should work', () => {
+    class TestClass extends MetaObject {
+      methodMissing(name) {
+        return name;
+      }
+    }
+
+    utils.addSuffixMethods(TestClass, ['color', 'width'], 'suffixed');
+    utils.addPrefixMethods(TestClass, ['small', 'large'], 'prefixed');
+
+    const test = new TestClass();
+    expect(test.foobar).toEqual('foobar');
+    expect(test.foobarColor).toEqual('suffixed');
+    expect(test.smallFoobar).toEqual('prefixed');
+    expect(test.smallFoobarColor).toEqual('prefixed');
+  });
+});

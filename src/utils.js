@@ -30,15 +30,18 @@ function addPrefixMethods(Class, prefixes, handler) {
       return undefined;
     }
     var match = prefixes.find(function(item) {
-      return methodName.startsWith(item);
+      return methodName.startsWith(item) && methodName.length > item.length;
     });
     if (!match) {
       return undefined;
     }
     var innerMethodName = decapitalize(methodName.substr(match.length));
-    return function prefixedMethod(value) {
-      return handler.call(this, innerMethodName, match, value);
-    };
+    if (typeof handler === 'function') {
+      return function prefixedMethod(value) {
+        return handler.call(this, innerMethodName, match, value);
+      };
+    }
+    return handler;
   });
 }
 
@@ -51,7 +54,7 @@ function addSuffixMethods(Class, suffixes, handler) {
       return undefined;
     }
     var match = cleanedSuffixes.find(function(item) {
-      return methodName.endsWith(item[0]);
+      return methodName.endsWith(item[0]) && methodName.length > item[0].length;
     });
     if (!match) {
       return undefined;
@@ -60,9 +63,12 @@ function addSuffixMethods(Class, suffixes, handler) {
       0,
       methodName.length - match[1].length
     );
-    return function suffixedMethod(value) {
-      return handler.call(this, innerMethodName, match[1], value);
-    };
+    if (typeof handler === 'function') {
+      return function suffixedMethod(value) {
+        return handler.call(this, innerMethodName, match[1], value);
+      };
+    }
+    return handler;
   });
 }
 
