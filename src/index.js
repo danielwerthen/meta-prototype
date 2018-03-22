@@ -1,1 +1,3 @@
-exports.MetaObject = require('./meta-object')
+'use strict';
+
+exports.MetaObject = require('./meta-object');

@@ -1,9 +1,11 @@
+'use strict';
+
 function wrapMethodMissing(Class, fn) {
-  const prototype = Class.prototype;
-  const inner = prototype.methodMissing;
+  var prototype = Class.prototype;
+  var inner = prototype.methodMissing;
   Reflect.defineProperty(prototype, 'methodMissing', {
     value: function methodMissing(name) {
-      const result = fn(name);
+      var result = fn(name);
       if (result === undefined) {
         return inner(name);
       }
@@ -27,13 +29,13 @@ function addPrefixMethods(Class, prefixes, handler) {
     if (typeof methodName === 'symbol') {
       return undefined;
     }
-    const match = prefixes.find(function(item) {
+    var match = prefixes.find(function(item) {
       return methodName.startsWith(item);
     });
     if (!match) {
       return undefined;
     }
-    const innerMethodName = decapitalize(methodName.substr(match.length));
+    var innerMethodName = decapitalize(methodName.substr(match.length));
     return function prefixedMethod(value) {
       return handler.call(this, innerMethodName, match, value);
     };
@@ -41,20 +43,20 @@ function addPrefixMethods(Class, prefixes, handler) {
 }
 
 function addSuffixMethods(Class, suffixes, handler) {
-  const cleanedSuffixes = suffixes.map(function(item) {
+  var cleanedSuffixes = suffixes.map(function(item) {
     return [capitalize(item), item];
   });
   wrapMethodMissing(Class, function prefixedMethodMissing(methodName) {
     if (typeof methodName === 'symbol') {
       return undefined;
     }
-    const match = cleanedSuffixes.find(function(item) {
+    var match = cleanedSuffixes.find(function(item) {
       return methodName.endsWith(item[0]);
     });
     if (!match) {
       return undefined;
     }
-    const innerMethodName = methodName.substr(
+    var innerMethodName = methodName.substr(
       0,
       methodName.length - match[1].length
     );
