@@ -1,6 +1,6 @@
 {
   "name": "meta-prototype",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Adds meta programming functionality to the prototype chain",
   "main": "src/index.js",
   "files": [
